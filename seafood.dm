@@ -34,7 +34,7 @@
 
 /obj/item/reagent_containers/food/snacks/salmonsteak/onarre
 	name = "Onarre"
-	desc = "Nem sei que porra erh essa"
+	desc = "Fried Shrimp with alface brasileiro"
 	icon = 'icons/obj/food/seafood.dmi'
 	icon_state = "onarre" // Sprite based on one created by https://github.com/binarysudoku for Goonstation, They have relicensed it for our use.
 	trash = /obj/item/trash/plate
