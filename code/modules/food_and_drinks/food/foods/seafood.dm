@@ -21,6 +21,17 @@
 	list_reagents = list("protein" = 3, "vitamin" = 2)
 	tastes = list("raw salmon" = 1)
 
+/obj/item/reagent_containers/food/snacks/salmonsteak/onarre
+	name = "Onarre"
+	desc = "A Fish fillet in milanesa"
+	icon = 'icons/obj/food/seafood.dmi'
+	icon_state = "onarre" // Sprite based on one created by https://github.com/binarysudoku for Goonstation, They have relicensed it for our use.
+	trash = /obj/item/trash/plate
+	filling_color = "#7A3D11"
+	bitesize = 3
+	list_reagents = list("nutriment" = 4, "vitamin" = 2)
+	tastes = list("cooked salmon" = 1)
+
 /obj/item/reagent_containers/food/snacks/salmonsteak
 	name = "salmon steak"
 	desc = "A fillet of freshly-grilled salmon meat."
