@@ -66,7 +66,40 @@ SUBSYSTEM_DEF(jobs)
 	return type_occupations[jobtype]
 
 /datum/controller/subsystem/jobs/proc/GetPlayerAltTitle(mob/new_player/player, rank)
-	return player.client.prefs.active_character.GetPlayerAltTitle(GetJob(rank))
+	var/datum/job/job = GetJob(rank)
+	var/basename = player.client.prefs.active_character.GetPlayerAltTitle(job)
+	
+	// Make sure exp tracking is enabled
+	if (!GLOB.configuration.jobs.enable_exp_tracking)
+		return basename
+
+	// Make sure job is head of something
+	if (!(job.title in GLOB.command_positions))
+		return basename
+
+	// Pretty consistent, most closely associated EXP type
+	var/main_exp_type = null
+	for(var/exp_type in job.exp_map)
+		main_exp_type = exp_type
+
+	// No EXP type? Abort
+	if (!main_exp_type)
+		return basename
+
+	var/list/play_records = params2list(player.client.prefs.exp)
+	var/exp = text2num(play_records[main_exp_type])
+
+	// No EXP of EXP type? Abort, 0 is allowed
+	if (isnull(exp))
+		return basename
+
+	// Use escaped but forbidden chars so HoP can't fake these
+	switch(exp)
+		if (0 to 4 * 60) return basename + " <b>I</b>"
+		if (4 * 60 to 6 * 60) return basename + " <b>II</b>"
+		if (6 * 60 to 8 * 60) return basename + " <b>III</b>"
+		if (8 * 60 to 15 * 60) return basename + " <b>IV</b>"
+		else return basename + " <b>V</b>"
 
 /datum/controller/subsystem/jobs/proc/AssignRole(mob/new_player/player, rank, latejoin = 0)
 	Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
